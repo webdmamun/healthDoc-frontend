@@ -29,19 +29,19 @@ const Services = () => {
     },
   ];
   return (
-    <div className="my-20">
+    <section className="my-20">
       <div className="text-center">
         <h2 className="text-primary text-xl font-bold uppercase">
           Our Services
         </h2>
         <h2 className="text-4xl">Services We Provide</h2>
       </div>
-      <div className="grid sm:grid-cols-1  lg:grid-cols-3 gap-4 justify-items-center mt-5">
+      <div className="grid sm:grid-cols-1  lg:grid-cols-3 gap-4 justify-items-center mt-5 mb-40">
         {services.map((service) => (
           <Service key={service.id} service={service}></Service>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

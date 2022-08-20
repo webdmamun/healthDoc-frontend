@@ -5,7 +5,7 @@ import marker from "../../../assets/icons/marker.svg";
 
 const Info = () => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 text-white bg-base-200">
+    <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 text-white bg-base-200">
       {/* card one start */}
       <div className="card lg:card-side bg-gradient-to-r from-secondary to-primary shadow-xl px-3">
         <figure>
@@ -39,7 +39,7 @@ const Info = () => {
         </div>
       </div>
       {/* card three end */}
-    </div>
+    </section>
   );
 };
 
