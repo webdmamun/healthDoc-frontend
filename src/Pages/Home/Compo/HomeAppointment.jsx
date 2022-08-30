@@ -5,7 +5,10 @@ import appintmentBg from "../../../assets/images/appointment.png";
 const HomeAppointment = () => {
   return (
     <section
-      style={{ background: `url(${appintmentBg})` }}
+      style={{
+        background: `url(${appintmentBg})`,
+        backgroundSize: "cover",
+      }}
       className="flex justify-center items-center"
     >
       <div className="flex-1 hidden lg:block">
