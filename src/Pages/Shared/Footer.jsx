@@ -71,6 +71,19 @@ const Footer = () => {
           <p>Copyright © 2022 - All right reserved</p>
         </div>
         <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+          <a
+            href="http://wa.me/+8801766448121"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-4xl"
+          >
+            <img
+              className="w-7"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2044px-WhatsApp.svg.png"
+              alt="Whatsapp logo"
+            />
+          </a>
+
           <Link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
