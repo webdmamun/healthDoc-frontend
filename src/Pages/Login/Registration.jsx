@@ -3,6 +3,7 @@ import {
   useSignInWithGoogle,
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
+  useSendEmailVerification,
 } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,9 @@ const Registration = () => {
   const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+  const [sendEmailVerification, sending, verror] =
+    useSendEmailVerification(auth);
+
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
   const navigate = useNavigate();
@@ -25,11 +29,11 @@ const Registration = () => {
 
   let signErrorMessage;
 
-  if (loading || gloading || updating) {
+  if (loading || gloading || updating || sending) {
     return <Loading />;
   }
 
-  if (error || gerror || updateError) {
+  if (error || gerror || updateError || verror) {
     signErrorMessage = (
       <>
         <div className="alert alert-error shadow-lg mb-5">
@@ -48,7 +52,10 @@ const Registration = () => {
               />
             </svg>
             <span>
-              {error?.message || gerror?.message || updateError?.message}
+              {error?.message ||
+                gerror?.message ||
+                updateError?.message ||
+                verror?.message}
             </span>
           </div>
         </div>
@@ -64,6 +71,8 @@ const Registration = () => {
     console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
+    await sendEmailVerification();
+    alert("Please Check you Email inbox or Spam box for Verification");
     console.log("update done");
     navigate("/appointment");
   };

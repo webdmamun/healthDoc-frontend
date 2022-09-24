@@ -2,7 +2,7 @@ import React from "react";
 import { format } from "date-fns";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
-  const { name, slots } = treatment;
+  const { _id, name, slots } = treatment;
 
   const handleBooking = (e) => {
     e.preventDefault();
