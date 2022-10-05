@@ -1,14 +1,43 @@
 import React from "react";
 import { format } from "date-fns";
+import auth from "../../../firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { _id, name, slots } = treatment;
+  const formattedDate = format(date, "PP");
+  const [user, loading, error] = useAuthState(auth);
 
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
-    setTreatment(null);
-    console.log(slot);
+    const booking = {
+      treatmentId: _id,
+      treatmentName: name,
+      date: formattedDate,
+      slot,
+      patientEmail: user.email,
+      patientName: user.displayName,
+      phone: e.target.phone.value,
+    };
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast(`Appointment is set, ${formattedDate} at ${slot}`);
+        } else {
+          toast.error(
+            `Already have and appointment on ${data.booking?.date} at ${data.booking?.slot}`
+          );
+        }
+        setTreatment(null);
+      });
   };
   return (
     <div>
@@ -39,24 +68,31 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               name="slot"
               className="select select-bordered w-full max-w-xs"
             >
-              <option defaultValue>Select a time slot</option>
-              {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
+              {slots.map((slot, index) => (
+                <option value={slot} key={index}>
+                  {slot}
+                </option>
               ))}
             </select>
             <input
               type="text"
               placeholder="Yout Name"
+              name="name"
               className="input input-bordered w-full max-w-xs"
+              disabled
+              value={user?.displayName || ""}
             />
             <input
               type="number"
+              name="phone"
               placeholder="Phone Numebr"
               className="input input-bordered w-full max-w-xs"
             />
             <input
               type="email"
-              placeholder="Email Address"
+              name="email"
+              disabled
+              value={user?.email || ""}
               className="input input-bordered w-full max-w-xs"
             />
 
